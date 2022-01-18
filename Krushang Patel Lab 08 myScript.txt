@@ -1,0 +1,108 @@
+#!/bin/bash
+#Assignment Number : Lab 8
+#Student Name      : Krushang Patel
+#Student Number    : 041021848
+#Course Name       : 21S_CST_8102 Operating System (GNU/Linux)
+#Lab_Section       : 302
+#Description       : The myscript.sh file is a menu driven program that asks for user's choice and based upon the user's input, the action requested shall be performed as per the user management systems.
+
+
+# The menu that displays various options which ask the users for various operation.
+echo "Choose one of the following options : "
+echo "A - Create a user account."
+echo "B - Delete a user account."
+echo "C - Change supplementary group for a user account."
+echo "D - Change initial group for a user account."
+echo "E - Change default login shell for a user account."
+echo "F - Change account expiration date for a user account."
+echo "Q - Quit"
+read -p "What would you like to do? :" choice
+clear
+
+while [ "$choice" != "Q" ] && [ "$choice" != "q" ] 
+do	
+	#code when selection is for adding user.
+	if [ "$choice" == "A" ] || [ "$choice" == "a" ]
+	then 
+		echo "choice selected is : A"
+		read -p "username: " uname
+		read -p "home directory (using absolute path): " homedir
+		read -p "default login shell: " loginshell
+		sudo useradd  -m -d "$homedir" -s "$loginshell" "$uname"
+		echo " "
+		echo "user /"$uname"/ added successfully !"
+	
+	#code when selection is for deleting user.
+	elif [ "$choice" == "B" ] || [ "$choice" == "b" ]
+	then
+		echo "choice selected is : B"
+		read -p "username to be deleted: " uname
+		sudo userdel -r "$uname"
+		echo " "
+		echo "user /"$uname"/ deleted successfully !"
+	
+	#code when selection is for adding supplementary group.
+	elif [ "$choice" == "C" ] || [ "$choice" == "c" ]
+	then
+		echo "choice selected is : C"
+		read -p "username: " uname
+		read -p "supplementary group name: " gname
+		sudo usermod -G $gname $uname
+		echo " "
+		echo "The supplementary group is changed successfully !"
+
+	#code when selection is for changing initial group.
+	elif [ "$choice" == "D" ] || [ "$choice" == "d" ]
+	then
+		echo "choice selected is : D"
+		read -p "username: " uname
+		read -p "initial group name: " gname
+		sudo usermod -g $gname $uname
+		echo " "
+		echo "The initial group is changed successfully !"
+	
+	#code when selection is for changing the shell name.
+	elif [ "$choice" == "E" ] || [ "$choice" == "e" ]
+	then
+		echo "choice selected is : E"
+		read -p "username: " uname
+		read -p "shell name: " sname
+		sudo usermod -s $sname $uname
+		echo " "
+		echo "The login shell is changed successfully !"
+
+	#code when selection is for changing expiration date
+	elif [ "$choice" == "F" ] || [ "$choice" == "f" ]
+	then
+		echo "choice selected is : F"
+		read -p "username: " uname
+		read -p "expiration date (YYYY-MM-DD): " date
+		sudo usermod -e $date $uname
+		echo " "
+		echo "The expiration date changed successfully !"
+	
+	else 
+		#display when input value is out of order.
+		echo "Invalid option is chosen."
+	
+	fi
+
+	sleep 3
+        clear
+
+
+        # for continuation of loop until exit.
+	echo "Choose one of the following options : "
+	echo "A - Create a user account."
+	echo "B - Delete a user account."
+	echo "C - Change supplementary group for a user account."
+	echo "D - Change initial group for a user account."
+	echo "E - Change default login shell for a user account."
+	echo "F - Change account expiration date for a user account."
+	echo "Q - Quit"
+	read -p "What would you like to do? :" choice
+	clear
+
+done
+echo "The program quits.. Thank You : )"
+sleep 3
